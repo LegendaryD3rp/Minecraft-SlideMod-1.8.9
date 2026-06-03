@@ -119,6 +119,8 @@ public class WallRunHandler {
 
     /** 检测玩家附近是否有墙，且玩家正朝墙运动 */
     private void checkForWall(EntityPlayerSP player) {
+        if (player.worldObj == null) return;
+
         // 必须有足够的速度才能上墙
         double hSpeed = Math.sqrt(player.motionX * player.motionX + player.motionZ * player.motionZ);
         if (hSpeed < 0.08) return;
@@ -182,6 +184,10 @@ public class WallRunHandler {
 
     /** @return false 表示滑墙结束 */
     private boolean tickWallRun(EntityPlayerSP player) {
+        if (player.worldObj == null) {
+            stopWallRun(player);
+            return false;
+        }
         wallRunTicks++;
 
         // 超时结束
@@ -292,6 +298,7 @@ public class WallRunHandler {
     // ════════════════════════════════════════════
 
     private void doDoubleJump(EntityPlayerSP player) {
+        if (player.worldObj == null) return;
         double hPower = SlideMod.config.doubleJumpHorizontal;
         double vPower = SlideMod.config.doubleJumpVertical;
 
@@ -325,6 +332,7 @@ public class WallRunHandler {
     // ════════════════════════════════════════════
 
     private void spawnWallRunParticles(EntityPlayerSP player) {
+        if (player.worldObj == null) return;
         double x = player.posX + wallDirX * 0.4;
         double y = player.posY + 0.5 + Math.random() * 1.0;
         double z = player.posZ + wallDirZ * 0.4;
@@ -335,32 +343,45 @@ public class WallRunHandler {
             player.posZ + wallDirZ
         );
 
-        IBlockState state = player.worldObj.getBlockState(groundPos);
-        Block block = state.getBlock();
-        if (block == Blocks.air || !block.isFullBlock()) {
-            block = Blocks.stone;
-        }
+        try {
+            IBlockState state = player.worldObj.getBlockState(groundPos);
+            Block block = state.getBlock();
+            if (block == Blocks.air || !block.isFullBlock()) {
+                // 如果墙根不是实心块，用石头兜底
+                block = Blocks.stone;
+                state = block.getDefaultState(); // ← 关键：同时更新 state，避免 getMetaFromState 抛异常
+            }
 
-        // 使用 blockcrack 粒子模拟刮擦效果
-        int blockId = Block.getIdFromBlock(block);
-        int meta = block.getMetaFromState(state);
-        player.worldObj.spawnParticle(
-            EnumParticleTypes.BLOCK_CRACK,
-            x, y, z,
-            0, 0.02, 0,
-            blockId + (meta << 12)
-        );
+            int meta;
+            try {
+                meta = block.getMetaFromState(state);
+            } catch (Exception e) {
+                meta = 0;
+            }
+            int blockId = Block.getIdFromBlock(block);
+            int combined = blockId + (meta << 12);
 
-        // 额外几个小粒子
-        for (int i = 0; i < 2; i++) {
+            // 使用 blockcrack 粒子模拟刮擦效果
             player.worldObj.spawnParticle(
                 EnumParticleTypes.BLOCK_CRACK,
-                x + (Math.random() - 0.5) * 0.3,
-                y + (Math.random() - 0.5) * 0.5,
-                z + (Math.random() - 0.5) * 0.3,
-                0, 0.01, 0,
-                blockId + (meta << 12)
+                x, y, z,
+                0, 0.02, 0,
+                combined
             );
+
+            // 额外几个小粒子
+            for (int i = 0; i < 2; i++) {
+                player.worldObj.spawnParticle(
+                    EnumParticleTypes.BLOCK_CRACK,
+                    x + (Math.random() - 0.5) * 0.3,
+                    y + (Math.random() - 0.5) * 0.5,
+                    z + (Math.random() - 0.5) * 0.3,
+                    0, 0.01, 0,
+                    combined
+                );
+            }
+        } catch (Exception e) {
+            // 粒子失败不影响游戏
         }
     }
 
