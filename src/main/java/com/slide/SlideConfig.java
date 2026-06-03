@@ -42,10 +42,10 @@ public class SlideConfig {
     public boolean phdFlopperEnabled = true;
     public float phdExplosionMinRadius = 1.5F;
     public float phdExplosionMaxRadius = 6.0F;
-    public float phdMinFallDist = 3.0F;
+    public float phdMinFallDist = 2.0F;
     public float phdMaxFallDist = 30.0F;
     /** 是否需要飞扑姿势才触发爆炸（否则只要有 PhD 效果 + 摔落就爆） */
-    public boolean phdRequireDive = true;
+    public boolean phdRequireDive = false;
 
     // ── Visual ──
     public float slideBodyPitch = 65.0F;
@@ -107,9 +107,9 @@ public class SlideConfig {
         phdFlopperEnabled = config.getBoolean("phdFlopperEnabled", cat, true, "PhD Flopper 开关");
         phdExplosionMinRadius = config.getFloat("phdExplosionMinRadius", cat, 1.5F, 0.0F, 10.0F, "最小爆炸半径");
         phdExplosionMaxRadius = config.getFloat("phdExplosionMaxRadius", cat, 6.0F, 0.0F, 20.0F, "最大爆炸半径（30格掉落）");
-        phdMinFallDist = config.getFloat("phdMinFallDist", cat, 3.0F, 1.0F, 20.0F, "触发爆炸的最小掉落距离");
+        phdMinFallDist = config.getFloat("phdMinFallDist", cat, 2.0F, 1.0F, 20.0F, "触发爆炸的最小掉落距离");
         phdMaxFallDist = config.getFloat("phdMaxFallDist", cat, 30.0F, 5.0F, 100.0F, "最大爆炸半径对应的掉落距离");
-        phdRequireDive = config.getBoolean("phdRequireDive", cat, true, "是否需要飞扑姿势才爆炸");
+        phdRequireDive = config.getBoolean("phdRequireDive", cat, false, "是否需要飞扑姿势才爆炸");
 
         cat = "visual";
         slideBodyPitch = config.getFloat("slideBodyPitch", cat, 65.0F, 0.0F, 90.0F, "滑铲模型前倾");

@@ -22,7 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
  */
 public class PhdFlopperHandler {
 
-    private static final Minecraft mc = Minecraft.getMinecraft();
+    // ── 懒初始化，避免 static 初始化时 Minecraft.getMinecraft() 返回 null ──
+    private static Minecraft mc() { return Minecraft.getMinecraft(); }
 
     // 用于检测落地瞬间
     private static boolean wasOnGround = true;
@@ -64,7 +65,7 @@ public class PhdFlopperHandler {
         if (event.phase != Phase.END) return;
         if (!SlideMod.config.phdFlopperEnabled) return;
 
-        EntityPlayerSP player = mc.thePlayer;
+        EntityPlayerSP player = mc().thePlayer;
         if (player == null || player.isDead) return;
 
         // 不在 PhD 效果中
