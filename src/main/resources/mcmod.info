@@ -1,0 +1,16 @@
+[
+{
+  "modid": "slidemod",
+  "name": "Slide Mod",
+  "description": "滑铲模组 — 奔跑时按滑铲键，冲刺滑行、钻1.5格缝隙",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["anonymous"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
