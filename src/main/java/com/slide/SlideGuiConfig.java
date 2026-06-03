@@ -30,7 +30,7 @@ public class SlideGuiConfig extends GuiConfig {
     }
 
     private static List<IConfigElement> buildConfigElements() {
-        List<IConfigElement> elements = new ArrayList<IConfigElement>();
+        List<IConfigElement> elements = new ArrayList<>();
 
         if (SlideMod.config == null || SlideMod.config.config == null) {
             return elements;
@@ -39,6 +39,9 @@ public class SlideGuiConfig extends GuiConfig {
         elements.add(new ConfigElement(SlideMod.config.config.getCategory("general")));
         elements.add(new ConfigElement(SlideMod.config.config.getCategory("mechanics")));
         elements.add(new ConfigElement(SlideMod.config.config.getCategory("dive")));
+        elements.add(new ConfigElement(SlideMod.config.config.getCategory("wallrun")));
+        elements.add(new ConfigElement(SlideMod.config.config.getCategory("doublejump")));
+        elements.add(new ConfigElement(SlideMod.config.config.getCategory("phdflopper")));
         elements.add(new ConfigElement(SlideMod.config.config.getCategory("visual")));
         elements.add(new ConfigElement(SlideMod.config.config.getCategory("key")));
 
