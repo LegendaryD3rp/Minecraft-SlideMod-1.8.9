@@ -14,8 +14,8 @@ buildscript {
 apply plugin: 'net.minecraftforge.gradle.forge'
 
 version = "1.0.0"
-group = "com.slide"
-archivesBaseName = "slidemod"
+group = "com.omnia.movement"
+archivesBaseName = "OmniMovement"
 
 sourceCompatibility = targetCompatibility = '1.8'
 compileJava {

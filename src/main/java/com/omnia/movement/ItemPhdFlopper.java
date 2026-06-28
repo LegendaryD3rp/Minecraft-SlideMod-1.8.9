@@ -1,4 +1,4 @@
-package com.slide;
+package com.omnia.movement;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,8 +14,7 @@ import net.minecraft.world.World;
  */
 public class ItemPhdFlopper extends Item {
 
-    // 效果持续 20 分钟（24000 ticks），等级 1
-    private static final int EFFECT_DURATION = 24000;
+    private static final int EFFECT_DURATION = 24000;    // 20 分钟
     private static final int EFFECT_AMPLIFIER = 0;
 
     public ItemPhdFlopper() {
@@ -29,7 +28,6 @@ public class ItemPhdFlopper extends Item {
     public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         if (player == null) return stack;
 
-        // 如果已经有 PhD 效果，不重复饮用
         if (player.isPotionActive(PotionPhdFlopper.instance)) {
             return stack;
         }
@@ -44,7 +42,6 @@ public class ItemPhdFlopper extends Item {
             ));
         }
 
-        // 如果不是创造模式，消耗一瓶返回空瓶
         if (!player.capabilities.isCreativeMode) {
             stack.stackSize--;
             if (stack.stackSize <= 0) {
@@ -63,6 +60,6 @@ public class ItemPhdFlopper extends Item {
 
     @Override
     public int getMaxItemUseDuration(ItemStack stack) {
-        return 32; // 饮用动画时长
+        return 32;
     }
 }

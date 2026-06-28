@@ -1,0 +1,8 @@
+# OmniMovement Localization (zh_CN)
+
+# 按键分类
+key.categories.omnimovement=全向机动
+
+# 按键名称
+key.omni.slide=滑铲
+key.omni.dive=飞扑

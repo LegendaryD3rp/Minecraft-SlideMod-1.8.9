@@ -1,4 +1,4 @@
-package com.slide;
+package com.omnia.movement;
 
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
@@ -14,10 +14,6 @@ public class PotionPhdFlopper extends Potion {
 
     public static PotionPhdFlopper instance;
 
-    /**
-     * 构造并自动注册到 Potion.potionTypes。
-     * @param id 药水 ID（推荐 32+，避开原版）
-     */
     public PotionPhdFlopper(int id) {
         super(id, new ResourceLocation("slidemod", "textures/gui/phd_flopper.png"), false, 0xFF00AA);
         setPotionName("effect.phd_flopper");
@@ -27,11 +23,9 @@ public class PotionPhdFlopper extends Potion {
     public static void register() {
         int id = 32;
         try {
-            // Potion.potionTypes 是 private static final Potion[]
             Field field = Potion.class.getDeclaredField("potionTypes");
             field.setAccessible(true);
 
-            // 移除 final 修饰符
             Field modifiersField = Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & ~Modifier.FINAL);
@@ -45,13 +39,10 @@ public class PotionPhdFlopper extends Potion {
 
             instance = new PotionPhdFlopper(id);
         } catch (Exception e) {
-            SlideMod.logger.error("Failed to register PhD Flopper potion via reflection", e);
-            // 最差情况：在已存在的数组中塞（可能抛异常）
+            System.err.println("[OmniMovement] Failed to register PhD Flopper potion: " + e.getMessage());
             try {
                 instance = new PotionPhdFlopper(id);
-            } catch (Exception ignored) {
-                SlideMod.logger.error("Complete registration failure for PhD Flopper");
-            }
+            } catch (Exception ignored) { }
         }
     }
 }

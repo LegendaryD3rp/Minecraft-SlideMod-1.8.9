@@ -1,16 +1,20 @@
 [
 {
-  "modid": "slidemod",
-  "name": "Slide Mod v1.1",
-  "description": "滑铲模组 v1.1 — 滑铲、飞扑、滑墙（Titanfall 风格）、二段跳、PhD Flopper 药水",
+  "modid": "omnimovement",
+  "name": "OmniMovement",
+  "description": "Adds slide and dive mechanics to Minecraft 1.8.9",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["anonymous"],
+  "authors": ["Omnia"],
   "credits": "",
   "logoFile": "",
   "screenshots": [],
-  "dependencies": []
+  "parent": "",
+  "requiredMods": [],
+  "dependencies": [],
+  "dependants": [],
+  "useMetadata": false
 }
 ]
